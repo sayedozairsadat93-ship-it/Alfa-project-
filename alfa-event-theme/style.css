@@ -1,0 +1,218 @@
+<?php
+/**
+ * Theme Name: Alfa Event Theme
+ * Theme URI: https://example.com/alfa-event-theme
+ * Author: GitHub Copilot
+ * Author URI: https://github.com/copilot
+ * Description: Premium, conversion-focused WordPress theme for events, community organizations, and partner-driven campaigns.
+ * Version: 1.0.0
+ * Requires at least: 6.3
+ * Tested up to: 6.6
+ * Requires PHP: 7.4
+ * Text Domain: alfa-event-theme
+ * Tags: custom-header, custom-logo, custom-menu, editor-style, featured-images, full-site-editing, block-styles, wide-blocks
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+function alfa_event_theme_setup() {
+	add_theme_support( 'title-tag' );
+	add_theme_support( 'post-thumbnails' );
+	add_theme_support( 'custom-logo', array(
+		'height'      => 80,
+		'width'       => 220,
+		'flex-height' => true,
+		'flex-width'  => true,
+	) );
+	add_theme_support( 'responsive-embeds' );
+	add_theme_support( 'wp-block-styles' );
+	add_theme_support( 'align-wide' );
+	add_theme_support( 'editor-styles' );
+	add_editor_style( 'assets/css/theme.css' );
+	add_theme_support( 'custom-line-height' );
+	add_theme_support( 'custom-spacing' );
+	add_theme_support( 'appearance-tools' );
+	register_nav_menus(
+		array(
+			'primary' => __( 'Primary Menu', 'alfa-event-theme' ),
+			'footer'  => __( 'Footer Menu', 'alfa-event-theme' ),
+		)
+	);
+}
+add_action( 'after_setup_theme', 'alfa_event_theme_setup' );
+
+function alfa_event_enqueue_assets() {
+	wp_enqueue_style( 'alfa-event-theme-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
+	wp_enqueue_style( 'alfa-event-theme-main', get_template_directory_uri() . '/assets/css/theme.css', array( 'alfa-event-theme-style' ), wp_get_theme()->get( 'Version' ) );
+	wp_enqueue_script( 'alfa-event-theme-script', get_template_directory_uri() . '/assets/js/theme.js', array(), wp_get_theme()->get( 'Version' ), true );
+}
+add_action( 'wp_enqueue_scripts', 'alfa_event_enqueue_assets' );
+
+function alfa_event_theme_register_patterns() {
+	register_block_pattern(
+		'alfa-event-theme/hero',
+		array(
+			'title'      => __( 'Hero - Homepage', 'alfa-event-theme' ),
+			'categories' => array( 'alfa-event-theme' ),
+			'content'    => '<!-- wp:cover {"url":"https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=80","id":1,"dimRatio":60,"overlayColor":"foreground","minHeight":650,"style":{"color":{"text":"#ffffff"}}} -->
+<div class="wp-block-cover has-foreground-background-color has-text-color" style="min-height:650px"><span aria-hidden="true" class="wp-block-cover__background has-foreground-background-color has-background-dim-60 has-background-dim"></span><img class="wp-block-cover__image-background wp-image-1" alt="" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=80" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:heading {"textAlign":"left","level":1,"style":{"typography":{"fontSize":"clamp(2.8rem, 5vw, 5rem)"}}} -->
+<h1 class="has-text-align-left" style="font-size:clamp(2.8rem, 5vw, 5rem)">Build a better future together</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"fontSize":"large"} -->
+<p class="has-large-font-size">A premium event platform designed to unite supporters, sponsors, and community leaders.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Get Tickets</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div></div>
+<!-- /wp:cover -->',
+		)
+	);
+
+	register_block_pattern(
+		'alfa-event-theme/feature-grid',
+		array(
+			'title'      => __( 'Feature Grid', 'alfa-event-theme' ),
+			'categories' => array( 'alfa-event-theme' ),
+			'content'    => '<!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"id":2,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=900&q=80" alt=""/></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Live Music</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Celebrate the sound of the community with a high-energy lineup built for connection and excitement.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"id":3,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80" alt=""/></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Family Activities</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Interactive experiences for all ages create a welcoming atmosphere built around togetherness.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"id":4,"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=900&q=80" alt=""/></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":3} -->
+<h3>Food + Vendors</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Discover local favorites, curated vendors, and a vibrant event experience built for the whole community.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->',
+		)
+	);
+
+	register_block_pattern(
+		'alfa-event-theme/cta',
+		array(
+			'title'      => __( 'CTA Banner', 'alfa-event-theme' ),
+			'categories' => array( 'alfa-event-theme' ),
+			'content'    => '<!-- wp:group {"style":{"color":{"background":"#102a43"}},"textColor":"white"} -->
+<div class="wp-block-group has-white-color has-text-color has-background" style="background-color:#102a43"><div class="wp-block-group__inner-container"><!-- wp:heading {"textAlign":"center"} -->
+<h2 class="has-text-align-center">Partner with us to create impact.</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Help bring this experience to life through sponsorship, partnership, and visibility opportunities.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-fill"} -->
+<div class="wp-block-button is-style-fill"><a class="wp-block-button__link wp-element-button">Become a partner</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div></div>
+<!-- /wp:group -->',
+		)
+	);
+}
+add_action( 'init', 'alfa_event_theme_register_patterns' );
+
+function alfa_event_register_customizer( $wp_customize ) {
+	$wp_customize->add_section(
+		'alfa_event_homepage_section',
+		array(
+			'title'    => __( 'Alfa Theme Homepage', 'alfa-event-theme' ),
+			'priority' => 120,
+		)
+	);
+
+	$settings = array(
+		'hero_title'           => __( 'Build a better future together', 'alfa-event-theme' ),
+		'hero_subtitle'        => __( 'A premium event experience designed to rally supporters, sponsors, and community leaders around a common mission.', 'alfa-event-theme' ),
+		'hero_primary_label'   => __( 'Get Tickets', 'alfa-event-theme' ),
+		'hero_primary_url'     => '#register',
+		'hero_secondary_label' => __( 'Learn More', 'alfa-event-theme' ),
+		'hero_secondary_url'   => '#overview',
+		'hero_image'           => '',
+	);
+
+	foreach ( $settings as $setting_key => $default_value ) {
+		$wp_customize->add_setting(
+			'alfa_event_' . $setting_key,
+			array(
+				'default'           => $default_value,
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+
+		$control_type = 'text';
+		if ( 'hero_image' === $setting_key ) {
+			$control_type = 'image';
+		}
+
+		$wp_customize->add_control(
+			'alfa_event_' . $setting_key,
+			array(
+				'label'    => ucfirst( str_replace( array( '_', 'hero ' ), array( ' ', 'Hero ' ), $setting_key ) ),
+				'section'  => 'alfa_event_homepage_section',
+				'type'     => $control_type,
+				'priority' => 10,
+			)
+	);
+	}
+}
+add_action( 'customize_register', 'alfa_event_register_customizer' );
+
+function alfa_event_get_hero_image() {
+	$image_id = get_theme_mod( 'alfa_event_hero_image', '' );
+	if ( ! empty( $image_id ) ) {
+		$image = wp_get_attachment_image_src( $image_id, 'large' );
+		if ( ! empty( $image[0] ) ) {
+			return $image[0];
+		}
+	}
+	return 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=80';
+}
+
+function alfa_event_get_primary_cta_url() {
+	$url = get_theme_mod( 'alfa_event_hero_primary_url', '#register' );
+	return esc_url( $url );
+}
+
+function alfa_event_get_secondary_cta_url() {
+	$url = get_theme_mod( 'alfa_event_hero_secondary_url', '#overview' );
+	return esc_url( $url );
+}
